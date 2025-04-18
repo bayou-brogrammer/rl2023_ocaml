@@ -6,7 +6,7 @@ type t = {
   speed : int;
   alive : bool;
   mutable next_turn_time : int;
-  actions : Action.game_action ref Deque.t;
+  actions : Action_type.game_action ref Deque.t;
 }
 
 let yojson_of_t (t : t) : Yojson.Safe.t =

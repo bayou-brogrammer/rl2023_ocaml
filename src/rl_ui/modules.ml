@@ -76,7 +76,7 @@ let create_initial_state font_config =
     let backend =
       match backend with
       | Some b -> b
-      | None -> B.make ~debug:true ~w:80 ~h:50 ~seed
+      | None -> B.make ~debug:true ~w:80 ~h:40 ~seed
     in
     let open Rl_core.State in
     let multi_level =

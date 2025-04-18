@@ -33,7 +33,7 @@ let make ~debug ~w ~h ~seed =
   let turn_queue = Turn_queue.create () in
 
   let open Mapgen in
-  let config = Config.default ~seed in
+  let config = Config.make ~seed ~w ~h in
   let map = Generator.generate ~config ~level:1 ~total_levels:5 in
 
   {
@@ -79,6 +79,10 @@ let get_entity_at_pos (entities : E.EntityManager.t) (pos : loc) :
 let get_player (backend : t) : E.entity =
   E.EntityManager.find_unsafe backend.entities backend.player.entity_id
 
+let get_player_pos (backend : t) : loc =
+  let player = get_player backend in
+  player.pos
+
 let get_player_actor (backend : t) : Actor.t =
   let player = get_player backend in
   match player.data with
@@ -104,6 +108,6 @@ let to_common_backend (b : t) =
     method get_player_id = b.player.entity_id
     method get_map_width = Tilemap.get_width b.map
     method get_map_height = Tilemap.get_height b.map
-    method is_tile_walkable x y = Tile.is_walkable (Tilemap.get_tile b.map x y)
+    method is_tile_walkable pos = Tile.is_walkable (Tilemap.get_tile b.map pos)
     method move_entity entity_id x y = move_entity b entity_id x y
   end

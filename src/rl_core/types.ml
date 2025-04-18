@@ -26,3 +26,12 @@ type item = {
 [@@deriving yojson]
 
 type inventory = item list [@@deriving yojson]
+
+let key_to_direction input =
+  let open Raylib in
+  match input with
+  | Key.W | Key.Up -> Some North
+  | Key.S | Key.Down -> Some South
+  | Key.A | Key.Left -> Some West
+  | Key.D | Key.Right -> Some East
+  | _ -> None

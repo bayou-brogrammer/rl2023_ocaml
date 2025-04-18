@@ -66,11 +66,7 @@ let generate ~(config : Config.t) ~(level : int) ~(total_levels : int) :
   let width = config.width in
   let height = config.height in
 
-  let player_start =
-    if level = 1 then find_random_floor grid ~width ~height ~rng else (0, 0)
-    (* Will be set to stairs_up for non-first levels *)
-  in
-
+  let player_start = find_random_floor grid ~width ~height ~rng in
   let stairs_up = if level = 1 then None else Some player_start in
 
   (* Find farthest walkable tiles from player_start *)
@@ -79,6 +75,17 @@ let generate ~(config : Config.t) ~(level : int) ~(total_levels : int) :
   let stairs_down =
     if level = total_levels then None else Some (pick_random farthest ~rng ~n:3)
   in
+
+  (* Log player Start *)
+  let x, y = player_start in
+  Logs.info (fun m -> m "player_start: %s" (Printf.sprintf "(%d, %d)" x y));
+
+  (* Log stairs_up *)
+  Logs.info (fun m ->
+      m "stairs_up: %s"
+        (match stairs_up with
+        | Some (x, y) -> Printf.sprintf "(%d, %d)" x y
+        | None -> "None"));
 
   (* Place stairs tiles in the grid *)
   (match stairs_up with

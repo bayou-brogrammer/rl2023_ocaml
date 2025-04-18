@@ -17,6 +17,9 @@ module A = Rl_core.Actor
 module AM = Rl_core.Actor_manager
 module Actions = Rl_core.Actions
 module Turn_system = Rl_core.Turn_system
+module CoreState = Rl_core.State
+module Tilemap = Rl_core.Backend.Tilemap
+module Tile = Rl_core.Backend.Tile
 
 module PosSet = struct
   module T = struct
@@ -99,35 +102,8 @@ let render (state : State.t) : State.t option =
 
 let handle_player_input (state : State.t) : State.t =
   let open Raylib in
-  let dir_opt =
-    if is_key_pressed Key.W || is_key_pressed Key.Up then Some T.North
-    else if is_key_pressed Key.S || is_key_pressed Key.Down then Some T.South
-    else if is_key_pressed Key.A || is_key_pressed Key.Left then Some T.West
-    else if is_key_pressed Key.D || is_key_pressed Key.Right then Some T.East
-    else None
-  in
-  match dir_opt with
-  | Some dir ->
-      let backend = state.game_state.backend in
-      let am = backend.actor_manager in
-      let entity = B.get_player backend in
-      let action = Actions.make_move_action dir entity in
-
-      AM.update am entity.id (fun actor -> A.queue_action actor action);
-
-      {
-        state with
-        game_state =
-          {
-            state.game_state with
-            backend =
-              {
-                state.game_state.backend with
-                mode = M.CtrlMode.Normal;
-                actor_manager = am;
-              };
-          };
-      }
+  match get_key_pressed () |> Input.of_key with
+  | Some ka -> Input.apply state ka
   | None -> state
 
 let handle_tick (state : State.t) : State.t =

@@ -1,3 +1,7 @@
-(test
- (name rl2025)
- (libraries base fmt rl_lib stdio))
+(library
+ (name multi_level_tests)
+ (modules)
+ (libraries base rl_core)
+ (preprocess
+  (pps ppx_inline_test))
+ (inline_tests))

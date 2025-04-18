@@ -18,5 +18,8 @@ type t = {
 (** [default ~seed] returns a default mapgen config with stage bounds and dimensions. *)
 val default : seed:int -> t
 
+(** [make ~seed ~w ~h] returns a mapgen config with given seed, width, and height. *)
+val make : seed:int -> w:int -> h:int -> t
+
 (** [pick_total_levels config] deterministically picks a number of levels between [min_levels] and [max_levels] based on the seed. *)
 val pick_total_levels : t -> int

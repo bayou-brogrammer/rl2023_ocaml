@@ -21,5 +21,7 @@ let get_height v = v.height
 let get_width v = v.width
 
 (* Tile *)
-let get_tile v x y = v.map.(Rl_utils.Utils.calc_offset v.width x y)
-let set_tile v x y tile = v.map.(Rl_utils.Utils.calc_offset v.width x y) <- tile
+let get_tile v (x, y) = v.map.(Rl_utils.Utils.calc_offset v.width x y)
+
+let set_tile v (x, y) tile =
+  v.map.(Rl_utils.Utils.calc_offset v.width x y) <- tile

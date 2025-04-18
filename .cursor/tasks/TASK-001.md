@@ -1,7 +1,7 @@
 # Entity System Implementation
 
 **Task ID**: TASK-001
-**Status**: 📝 Open
+**Status**: 🟧 In Progress
 **Created**: 2023-08-02
 **Priority**: High
 
@@ -40,12 +40,12 @@ Implement the entity system for managing game actors including the player, enemi
 
 ## Acceptance Criteria
 
-- [ ] Entity data structure is defined and documented
-- [ ] Entity creation and management functions are implemented
-- [ ] Entities can be positioned and moved on the map
+- [x] Entity data structure is defined and documented
+- [x] Entity creation and management functions are implemented
+- [x] Entities can be positioned and moved on the map
 - [ ] Entities can interact with each other (combat, etc.)
-- [ ] Player entity can be controlled through input
-- [ ] Entity state updates correctly during game loop
+- [x] Player entity can be controlled through input
+- [x] Entity state updates correctly during game loop
 
 ## Notes
 
@@ -53,3 +53,8 @@ Implement the entity system for managing game actors including the player, enemi
 - Keep performance in mind for large numbers of entities
 - Plan for future extensions like entity AI, equipment system, etc.
 - May require updating the serialization system for save/load functionality
+
+## Next Steps
+
+- [ ] Defunctionalize action system: convert OO action classes to a sum-type and update Actor and turn_system to use the new Actions.execute API.
+- [ ] Implement entity interaction mechanisms: collision detection, combat system, and item pickup/use.
